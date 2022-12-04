@@ -1,38 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head%}
-<title>Add User</title>
+<title>Restaurant Supply Express</title>
 {%endblock%}
 
 {% block body%}
-<h1>Add Owner</h1>
 <div class="main">                 
-    <h2>Fill in user details here!</h2>
-    <form action="{{ url_for('index')}}" method="post" autocomplete="off">
-      <div class="element">
-                  <p>Username:</p>
-                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
-            </div>
-            <div class="element">
-                  <p>First name:</p>
-                  <input type="text" name="fname" placeholder="Enter user first name" class="field" id="fname" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Last name:</p>
-                  <input type="text" name="lname" placeholder="Enter user last name" class="field" id="lname" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Address:</p>
-                  <input type="text" name="address" placeholder="Enter user address" class="field" id="address" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Birthdate (YYYY-MM-DD):</p>
-                  <input type="date" id="birthdate" name="birthdate"></br></br>
-            </div>        
-            <input type="submit" class="btn" value="Update">
-            <div><p class="alert">{{alert}}</p></div>
-
-      </form>                    
+    <h1>Restaurant Supply Express!</h1>
+    <a href="{{ url_for('addUser') }}"><button class="btn">Add User</button></a>
+    </br>
+    <a href="{{ url_for('displayOwner') }}"><button class="btn">Display Owner</button></a>
 </div>
 {%endblock%}
 
