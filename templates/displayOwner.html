@@ -5,7 +5,9 @@
 {%endblock%}
 
 {% block body%}
-<div class="main">                 
+<div class="main">
+    <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
     <h1>Display Owner</h1>
     <table>
           <tr>
@@ -33,6 +35,7 @@
               </tr>
             {% endfor %}
       </table>
+
 </div>
 {%endblock%}
 
