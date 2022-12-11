@@ -126,6 +126,7 @@ sp_main: begin
 	if isnull(ip_barcode) then leave sp_main; end if;
     if isnull(ip_iname) then leave sp_main; end if;
     if isnull(ip_weight) then leave sp_main; end if;
+    if ip_weight <= 0 then leave sp_main; end if;
 	-- ensure new ingredient doesn't already exist
 	if (ip_barcode in (select barcode from ingredients)) then leave sp_main; end if;
     insert into ingredients values (ip_barcode, ip_iname, ip_weight);
@@ -150,6 +151,7 @@ sp_main: begin
     if isnull(ip_fuel) then leave sp_main; end if;
     if isnull(ip_capacity) then leave sp_main; end if;
     if isnull(ip_sales) then leave sp_main; end if;
+    if isnull(ip_flown_by) then leave sp_main; end if;
 	-- ensure new drone doesn't already exist
 	if (select count(*) from drones where id = ip_id and tag = ip_tag > 0) then leave sp_main; end if;
     -- ensure that the delivery service exists

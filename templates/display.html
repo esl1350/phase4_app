@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head%}
-<title>Display Owner</title>
+<title>Display Views</title>
 {%endblock%}
 
 {% block body%}
@@ -21,7 +21,7 @@
               <th>lows</th>
               <th>debt</th>
           </tr>
-           {% for row in rows%}    
+           {% for row in ownerRows%}    
             <tr>
                   <td>{{row['username']}}</td>
                   <td>{{row['first_name']}}</td>
@@ -35,6 +35,31 @@
               </tr>
             {% endfor %}
       </table>
+      <h1>Display Employee</h1>
+      <table>
+            <tr>
+                <th>Username</th>
+                <th>taxID</th>
+                <th>Salary</th>
+                <th>Hire Date</th>
+                <th>Employee Experience</th>
+                <th>License ID</th>
+                <th>Pilot Experience</th>
+                <th>Manager?</th>
+            </tr>
+             {% for row in employeeRows%}    
+              <tr>
+                    <td>{{row['username']}}</td>
+                    <td>{{row['taxID']}}</td>
+                    <td>{{row['salary']}}</td>
+                    <td>{{row['hired']}}</td>
+                    <td>{{row['employee_experience']}}</td>
+                    <td>{{row['licenseID']}}</td>
+                    <td>{{row['pilot_experience']}}</td>
+                    <td>{{row['manager_status']}}</td>
+                </tr>
+              {% endfor %}
+        </table>
 
 </div>
 {%endblock%}

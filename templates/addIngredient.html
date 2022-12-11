@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Add Ingredient</title>
+{%endblock%}
+
+{% block body%}
+<h1>Add Ingredient</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in ingredient details here!</h2>
+    <form action="{{ url_for('addIngredient')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Barcode:</p>
+                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" required>
+            </div>
+
+            <div class="element">
+                  <p>Name:</p>
+                  <input type="text" name="name" placeholder="Enter ingredient name" class="field" id="name" required></br></br>  </div>
+            <div class="element">
+                    <p>Weight:</p>
+                    <input type="number" name="weight" placeholder="Enter ingredient weight" class="field" id="weight" required></br></br>
+            </div> 
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+

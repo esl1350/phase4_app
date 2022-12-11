@@ -8,15 +8,15 @@ mysql = MySQL(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Simba@316'
+app.config['MYSQL_PASSWORD'] = 'cs4400#CS4400%'
 app.config['MYSQL_DB'] = 'restaurant_supply_express'
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/addUser', methods = ['GET', 'POST'])
-def addUser():
+@app.route('/addOwner', methods = ['GET', 'POST'])
+def addOwner():
     alert = ''
     if request.method == 'POST':
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -31,15 +31,50 @@ def addUser():
             alert = 'query executed!'
         else:
             alert = 'field lengths incorrect'
-    return render_template('addUser.html', alert = alert)
+    return render_template('addOwner.html', alert = alert)
+@app.route('/addDrone', methods = ['GET' , 'POST'])
+def addDrone():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        drone_id = request.form['id']
+        drone_tag = request.form['tag']
+        fuel = request.form['fuel']
+        capacity = request.form['capacity']
+        sales = request.form['sales']
+        pilot = request.form['pilot']
+        if len(drone_id) <= 40 and len(pilot) <= 40 and int(capacity) >= 0 and int(sales) >= 0 and int(fuel) >= 0:
+            cursor.execute('call add_drone(% s, % s, % s, % s, % s, %s)', (drone_id, drone_tag, fuel, capacity, sales, pilot))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addDrone.html', alert = alert)
+@app.route('/addIngredient', methods = ['GET', 'POST'])
+def addIngredient():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        barcode = request.form['barcode']
+        name = request.form['name']
+        weight = request.form['weight']
+        if len(barcode) <= 40 and len(name) <= 100 and int(weight) >= 0:
+            cursor.execute('call add_ingredient(% s, % s, % s)', (barcode, name, weight))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addIngredient.html', alert = alert)
 
-@app.route('/displayOwner')
-def displayOwner():
+@app.route('/display')
+def display():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM display_owner_view;')
-    rows = cursor.fetchall()
-    return render_template('displayOwner.html', rows = rows)
-
+    ownerRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_employee_view;')
+    employeeRows = cursor.fetchall()
+    return render_template('display.html', ownerRows = ownerRows, employeeRows = employeeRows)
+    
 @app.route('/flyDrone', methods = ['GET', 'POST'])
 def flyDrone():
     alert = ''
@@ -117,14 +152,6 @@ def takeoverDrone():
         else:
             alert = 'field lengths incorrect'
     return render_template('takeoverDrone.html', alert = alert)
-
-@app.route('/displayEmployee')
-def displayEmployee():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM display_employee_view;')
-    rows = cursor.fetchall()
-    return render_template('displayEmployee.html', rows = rows)
-
 
 
 if __name__ == "__main__":
