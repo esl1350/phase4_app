@@ -1,5 +1,6 @@
 # phase4_app
 CS 4400 Phase 4 Project: Restaurant Supply Express
+
 by: Reuben An, Kenny Hoang, Jeffrey Lei, Elizabeth Liu 
  
 ## Setup:
