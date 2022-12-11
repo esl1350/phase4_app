@@ -1,36 +1,28 @@
 {% extends 'base.html' %}
 
 {% block head%}
-<title>Add User</title>
+<title>Takeover Drone</title>
 {%endblock%}
 
 {% block body%}
-<h1>Add Owner</h1>
+<h1>Takeover Drone</h1>
 <div class="main">
       <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
     </br>                 
-    <h2>Fill in user details here!</h2>
-    <form action="{{ url_for('addUser')}}" method="post" autocomplete="off">
+    <h2>Fill in drone details here!</h2>
+    <form action="{{ url_for('takeoverDrone')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Username:</p>
-                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
+                  <input type="text" name="username" placeholder="Enter pilot username" class="field" id="username" required>
             </div>
             <div class="element">
-                  <p>First name:</p>
-                  <input type="text" name="fname" placeholder="Enter user first name" class="field" id="fname" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Last name:</p>
-                  <input type="text" name="lname" placeholder="Enter user last name" class="field" id="lname" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Address:</p>
-                  <input type="text" name="address" placeholder="Enter user address" class="field" id="address" required></br></br>
-            </div>
-            <div class="element">
-                  <p>Birthdate (YYYY-MM-DD):</p>
-                  <input type="date" id="birthdate" name="birthdate"></br></br>
-            </div>        
+                  <p>Drone ID:</p>
+                  <input type="text" name="ip_id" placeholder="Enter drone ID" class="field" id="ip_id" required>
+                  </div>
+                  <div class="element">
+                  <p>Drone Tag:</p>
+                  <input type="number" name="ip_tag" placeholder="Enter drone tag" class="field" id="ip_tag" required></br></br>
+                  </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>
 
