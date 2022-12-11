@@ -80,7 +80,7 @@ def leaveSwarm():
         ip_id = request.form['ip_id']
         ip_tag = request.form['ip_tag']
         if len(ip_id) <= 40:
-            cursor.execute('call leave_swarm(% s, % d, % d)', (ip_id, ip_tag, ip_swarm_leader_tag))
+            cursor.execute('call leave_swarm(% s, % d)', (ip_id, ip_tag))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
