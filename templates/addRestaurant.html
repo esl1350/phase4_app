@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Add Restaurant</title>
+{%endblock%}
+
+{% block body%}
+<h1>Add Restaurant</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in restaurant details here!</h2>
+    <form action="{{ url_for('addRestaurant')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Name:</p>
+                  <input type="text" name="name" placeholder="Enter restaurant name" class="field" id="name" required>
+            </div>
+            <div class="element">
+                  <p>Rating:</p>
+                  <input type="number" name="rating" placeholder="Enter restaurant rating" class="field" id="rating" required min ="1" max="5"></br></br>
+            </div>
+                <div class="element">
+                    <p>Spent:</p>
+                    <input type="number" name="spent" placeholder="Enter restaurant spending" class="field" id="spent" required min="0"></br></br>
+            </div> 
+            <div class="element">
+                <p>Location:</p>
+                <input type="text" name="location" placeholder="Enter restaurant location" class="field" id="location" required>
+          </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+

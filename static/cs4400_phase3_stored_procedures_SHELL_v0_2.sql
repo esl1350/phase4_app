@@ -158,6 +158,9 @@ sp_main: begin
 	if (ip_id not in (select id from delivery_services)) then leave sp_main; end if;
     -- ensure that a valid pilot will control the drone
     if (ip_flown_by not in (select username from pilots)) then leave sp_main; end if;
+    
+    if ip_fuel <= 0 or ip_capacity < 0 or ip_sales < 0 then leave sp_main; end if;
+
     set @home = (select home_base from delivery_services where ip_id = id);
     insert into drones values (ip_id, ip_tag, ip_fuel, ip_capacity, ip_sales, ip_flown_by, null, null, @home);
 end //
@@ -179,6 +182,7 @@ sp_main: begin
     if isnull(ip_rating) then leave sp_main; end if;
     if isnull(ip_spent) then leave sp_main; end if;
     if isnull(ip_location) then leave sp_main; end if;
+    if ip_spent < 0 then leave sp_main; end if;
 	-- ensure new restaurant doesn't already exist
 	if (ip_long_name in (select long_name from restaurants)) then leave sp_main; end if;
     -- ensure that the location is valid
@@ -472,6 +476,7 @@ sp_main: begin
     if isnull(ip_price) then leave sp_main; end if;
 
 	-- ensure that the drone being loaded is owned by the service
+    if (ip_id not in (select id from drones where tag = ip_tag)) then leave sp_main; end if;
     if (ip_id not in (select id from delivery_services)) then leave sp_main; end if;
 	-- ensure that the ingredient is valid
     if (ip_barcode not in (select barcode from ingredients)) then leave sp_main; end if;
@@ -483,10 +488,10 @@ sp_main: begin
 	-- ensure that the drone has sufficient capacity to carry the new packages
     set @addedcapacity = (ip_more_packages);
     set @currentcapacity = if(exists(select sum(quantity) from payload where ip_tag = payload.tag and ip_id = payload.id), (select sum(quantity) from payload where ip_tag = payload.tag and ip_id = payload.id), 0);
-    if @addedcapacity + @currentcapacity >= (select capacity from drones where (drones.id = ip_id) and (drones.tag = ip_tag)) then leave sp_main; end if;
+    if @addedcapacity + @currentcapacity > (select capacity from drones where (drones.id = ip_id) and (drones.tag = ip_tag)) then leave sp_main; end if;
     -- add more of the ingredient to the drone
-    if (select count(*) from payload where ip_id = id and ip_tag = tag and ip_barcode = barcode) then
-	update payload set quantity = quantity + ip_more_packages where id = ip_id and tag = ip_tag and barcode = ip_barcode; end if;
+    if ((select count(*) from payload where ip_id = id and ip_tag = tag and ip_barcode = barcode) > 0) then
+	update payload set quantity = quantity + ip_more_packages where id = ip_id and tag = ip_tag and barcode = ip_barcode; leave sp_main; end if;
     insert into payload values(ip_id, ip_tag, ip_barcode, ip_more_packages, ip_price);
 end //
 delimiter ;
@@ -668,7 +673,7 @@ sp_main: begin
 	-- ensure that the drone exists
 	if (select count(*) from drones where id = ip_id and tag = ip_tag) = 0 then leave sp_main; end if;
     -- ensure that the drone is not carrying any ingredients
-	if (ip_id not in (select id from payload) and ip_tag not in (select tag from payload)) then leave sp_main; end if;
+	if (ip_id in (select id from payload) and ip_tag in (select tag from payload)) then leave sp_main; end if;
     delete from drones where id=ip_id and tag=ip_tag;
 	-- ensure that the drone is not leading a swarm
 end //

@@ -65,6 +65,88 @@ def addIngredient():
         else:
             alert = 'field lengths incorrect'
     return render_template('addIngredient.html', alert = alert)
+@app.route('/addRestaurant', methods = ['GET', 'POST'])
+def addRestaurant():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        name = request.form['name']
+        rating = request.form['rating']
+        spent = request.form['spent']
+        location = request.form['location']
+        if len(name) <= 40 and len(location) <= 40 and int(rating) >= 1 and int(rating) < 6 and int(spent) >= 0:
+            cursor.execute('call add_restaurant(% s, % s, % s, %s)', (name, rating, spent, location))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addRestaurant.html', alert = alert)
+
+@app.route('/removeIngredient', methods = ['GET', 'POST'])
+def removeIngredient():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        barcode = (request.form['barcode'])
+        if len(barcode) <= 40:
+            cursor.execute('call remove_ingredient(% s)', (barcode, ))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('removeIngredient.html', alert = alert)
+
+@app.route('/removeDrone', methods = ['GET', 'POST'])
+def removeDrone():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        tag = (request.form['tag'])
+        drone_id = request.form['id']
+        if len(drone_id) <= 40:
+            cursor.execute('call remove_drone(% s, % s)', (drone_id, tag))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('removeDrone.html', alert = alert)
+
+
+@app.route('/loadDrone', methods = ['GET', 'POST'])
+def loadDrone():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        tag = (request.form['tag'])
+        drone_id = request.form['id']
+        barcode = request.form['barcode']
+        quantity = request.form['quantity']
+        price = request.form['price']
+        if len(drone_id) <= 40:
+            cursor.execute('call load_drone(% s, % s, %s, %s, %s)', (drone_id, tag, barcode, quantity, price))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('loadDrone.html', alert = alert)
+
+@app.route('/refuelDrone', methods = ['GET', 'POST'])
+def refuelDrone():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        tag = (request.form['tag'])
+        drone_id = request.form['id']
+        fuel = request.form['fuel']
+        if len(drone_id) <= 40:
+            cursor.execute('call refuel_drone(% s, % s, %s)', (drone_id, tag, fuel))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('refuelDrone.html', alert = alert)
+
+
 
 @app.route('/display')
 def display():

@@ -13,7 +13,7 @@
     <form action="{{ url_for('flyDrone')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Drone ID:</p>
-                  <input type="text" name="ip_id" placeholder="Enter drone ID" class="field" id="ip_id" required>
+                  <input type="text" name="ip_id" placeholder="Enter drone ID" class="field" id="ip_id" min = "0" required>
             </div>
             <div class="element">
                   <p>Drone Tag:</p>
