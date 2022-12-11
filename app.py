@@ -49,7 +49,7 @@ def flyDrone():
         ip_tag = request.form['ip_tag']
         ip_destination = request.form['ip_destination']
         if len(ip_id) <= 40 and len(ip_destination) <= 10:
-            cursor.execute('call fly_drone(% s, % d, % s)', (ip_id, ip_tag, ip_destination))
+            cursor.execute('call fly_drone(% s, % s, % s)', (ip_id, ip_tag, ip_destination))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
@@ -65,7 +65,7 @@ def joinSwarm():
         ip_tag = request.form['ip_tag']
         ip_swarm_leader_tag = request.form['ip_swarm_leader_tag']
         if len(ip_id) <= 40:
-            cursor.execute('call join_drone(% s, % d, % d)', (ip_id, ip_tag, ip_swarm_leader_tag))
+            cursor.execute('call join_swarm(% s, % s, % s)', (ip_id, ip_tag, ip_swarm_leader_tag))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
@@ -80,7 +80,7 @@ def leaveSwarm():
         ip_id = request.form['ip_id']
         ip_tag = request.form['ip_tag']
         if len(ip_id) <= 40:
-            cursor.execute('call leave_swarm(% s, % d)', (ip_id, ip_tag))
+            cursor.execute('call leave_swarm(% s, % s)', (ip_id, ip_tag))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
@@ -111,7 +111,7 @@ def takeoverDrone():
         id = request.form['ip_id']
         tag = request.form['ip_tag']
         if len(username) <= 40 and len(id) <= 40 :
-            cursor.execute('call add_owner(% s, % s, % d', (username, id, tag))
+            cursor.execute('call add_owner(% s, % s, % s)', (username, id, tag))
             mysql.connection.commit()
             alert = 'query executed!'
         else:

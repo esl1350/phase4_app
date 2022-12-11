@@ -439,7 +439,7 @@ sp_main: begin
 		then leave sp_main; end if;
 	if (select count(*) from drones where ip_id in (select id from drones where (tag = ip_swarm_tag) and !(isnull(swarm_id) and isnull(swarm_tag)))) = 0
 		then leave sp_main; end if;
-	select flown_by into @flyer from drones where tag = swarm_tag and id = ip_id;
+	select flown_by into @flyer from drones where (select swarm_tag from drones where ip_id = id and ip_swarm_tag = tag) = tag and ip_id = id;
     update drones set swarm_id = null where ip_id = id and ip_swarm_tag = tag;
     update drones set swarm_tag = null where ip_id = id and ip_swarm_tag = tag;
     update drones set flown_by = @flyer where ip_id = id and ip_swarm_tag = tag;
