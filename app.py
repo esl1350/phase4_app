@@ -235,7 +235,11 @@ def display():
     ownerRows = cursor.fetchall()
     cursor.execute('SELECT * FROM display_employee_view;')
     employeeRows = cursor.fetchall()
-    return render_template('display.html', ownerRows = ownerRows, employeeRows = employeeRows)
+    cursor.execute('SELECT * FROM display_ingredient_view;')
+    ingredientRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_service_view;')
+    serviceRows = cursor.fetchall()
+    return render_template('display.html', ownerRows = ownerRows, employeeRows = employeeRows, ingredientRows = ingredientRows, serviceRows = serviceRows)
     
 @app.route('/flyDrone', methods = ['GET', 'POST'])
 def flyDrone():

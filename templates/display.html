@@ -61,6 +61,52 @@
               {% endfor %}
         </table>
 
+        <h1>Display Ingredients</h1>
+        <table>
+              <tr>
+                  <th>ingredient_name</th>
+                  <th>location</th>
+                  <th>amount_available</th>
+                  <th>low_price</th>
+                  <th>high_price</th>
+              </tr>
+               {% for row in ingredientRows%}    
+                <tr>
+                      <td>{{row['ingredient_name']}}</td>
+                      <td>{{row['location']}}</td>
+                      <td>{{row['amount_available']}}</td>
+                      <td>{{row['low_price']}}</td>
+                      <td>{{row['high_price']}}</td>
+                  </tr>
+                {% endfor %}
+          </table>
+
+          <h1>Display Service</h1>
+          <table>
+                <tr>
+                    <th>id</th>
+                    <th>long_name</th>
+                    <th>home_base</th>
+                    <th>manager</th>
+                    <th>revenue</th>
+                    <th>ingredients_carried</th>
+                    <th>cost_carried</th>
+                    <th>weight_carried</th>
+                </tr>
+                 {% for row in serviceRows%}    
+                  <tr>
+                        <td>{{row['id']}}</td>
+                        <td>{{row['long_name']}}</td>
+                        <td>{{row['home_base']}}</td>
+                        <td>{{row['manager']}}</td>
+                        <td>{{row['revenue']}}</td>
+                        <td>{{row['ingredients_carried']}}</td>
+                        <td>{{row['cost_carried']}}</td>
+                        <td>{{row['weight_carried']}}</td>
+                    </tr>
+                  {% endfor %}
+            </table>
+
 </div>
 {%endblock%}
 
