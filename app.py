@@ -257,6 +257,7 @@ def flyDrone():
             alert = 'field lengths incorrect'
     return render_template('flyDrone.html', alert = alert)
 
+
 @app.route('/joinSwarm', methods = ['GET', 'POST'])
 def joinSwarm():
     alert = ''

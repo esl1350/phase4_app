@@ -35,7 +35,7 @@
               </tr>
             {% endfor %}
       </table>
-      <h1>Display Employee</h1>
+    <h1>Display Employee</h1>
       <table>
             <tr>
                 <th>Username</th>
@@ -60,52 +60,31 @@
                 </tr>
               {% endfor %}
         </table>
-
-        <h1>Display Ingredients</h1>
+    <h1>Display Employee</h1>
         <table>
               <tr>
-                  <th>ingredient_name</th>
-                  <th>location</th>
-                  <th>amount_available</th>
-                  <th>low_price</th>
-                  <th>high_price</th>
+                  <th>Username</th>
+                  <th>taxID</th>
+                  <th>Salary</th>
+                  <th>Hire Date</th>
+                  <th>Employee Experience</th>
+                  <th>License ID</th>
+                  <th>Pilot Experience</th>
+                  <th>Manager?</th>
               </tr>
-               {% for row in ingredientRows%}    
+               {% for row in employeeRows%}    
                 <tr>
-                      <td>{{row['ingredient_name']}}</td>
-                      <td>{{row['location']}}</td>
-                      <td>{{row['amount_available']}}</td>
-                      <td>{{row['low_price']}}</td>
-                      <td>{{row['high_price']}}</td>
+                      <td>{{row['username']}}</td>
+                      <td>{{row['taxID']}}</td>
+                      <td>{{row['salary']}}</td>
+                      <td>{{row['hired']}}</td>
+                      <td>{{row['employee_experience']}}</td>
+                      <td>{{row['licenseID']}}</td>
+                      <td>{{row['pilot_experience']}}</td>
+                      <td>{{row['manager_status']}}</td>
                   </tr>
                 {% endfor %}
           </table>
-
-          <h1>Display Service</h1>
-          <table>
-                <tr>
-                    <th>id</th>
-                    <th>long_name</th>
-                    <th>home_base</th>
-                    <th>manager</th>
-                    <th>revenue</th>
-                    <th>ingredients_carried</th>
-                    <th>cost_carried</th>
-                    <th>weight_carried</th>
-                </tr>
-                 {% for row in serviceRows%}    
-                  <tr>
-                        <td>{{row['id']}}</td>
-                        <td>{{row['long_name']}}</td>
-                        <td>{{row['home_base']}}</td>
-                        <td>{{row['manager']}}</td>
-                        <td>{{row['revenue']}}</td>
-                        <td>{{row['ingredients_carried']}}</td>
-                        <td>{{row['cost_carried']}}</td>
-                        <td>{{row['weight_carried']}}</td>
-                    </tr>
-                  {% endfor %}
-            </table>
 
 </div>
 {%endblock%}
