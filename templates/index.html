@@ -9,7 +9,20 @@
     <h1>Restaurant Supply Express!</h1>
     <a href="{{ url_for('addUser') }}"><button class="btn">Add User</button></a>
     </br>
+    <a href="{{ url_for('addPilot') }}"><button class="btn">Add Pilot</button></a>
+    </br>
+    <a href="{{ url_for('addWorker') }}"><button class="btn">Add Worker</button></a>
+    </br>
+    <a href="{{ url_for('removePilot') }}"><button class="btn">Remove Pilot</button></a>
+    </br>
+    <a href="{{ url_for('purchaseIng') }}"><button class="btn">Purchase Ingredient</button></a>
+    </br>
     <a href="{{ url_for('displayOwner') }}"><button class="btn">Display Owner</button></a>
+    </br>
+    <a href="{{ url_for('displayIng') }}"><button class="btn">Display Ingredients</button></a>
+    </br>
+    <a href="{{ url_for('displayService') }}"><button class="btn">Display Service</button></a>
+    </br>
 </div>
 {%endblock%}
 

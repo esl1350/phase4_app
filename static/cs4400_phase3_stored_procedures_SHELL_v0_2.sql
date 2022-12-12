@@ -698,6 +698,7 @@ sp_main: begin
     leave sp_main;
     end if;
     
+    delete from work_for where username = ip_username;
     delete from users where username = ip_username;
 end //
 delimiter ;
