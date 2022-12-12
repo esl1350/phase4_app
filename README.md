@@ -11,9 +11,11 @@ Go into app.py and update the following lines of code with your own mySQL userna
  app.config['MYSQL_USER'] = 'your username here'
  app.config['MYSQL_PASSWORD'] = 'your password here'
 ```
-Use pip to install the following package and then create a virtual environment by running the activate.bat script in the venv folder.
+Use pip to install the following package and then create and activate a virtual environment by running the activate script in the venv folder.
 ```
  pip install virtualenv
+ python -m venv venv
+ venv\Scripts\activate #on Windows, Mac installation/activation may differ
 ```
 Once inside the virtual environment, your command line should look like this:
 ```
