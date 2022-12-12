@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Add Pilot</title>
+{%endblock%}
+
+{% block body%}
+<h1>Add Pilot</h1>
+<div class="main">                 
+    <h2>Fill in user details here!</h2>
+    <form action="{{ url_for('addPilot')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Username:</p>
+                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
+            </div>
+            <div class="element">
+                  <p>licenseID:</p>
+                  <input type="text" name="licenseID" placeholder="Enter user licenseID" class="field" id="licenseID" required></br></br>
+            </div>
+            <div class="element">
+                  <p>Experience:</p>
+                  <input type="text" name="pilotExperience" placeholder="Enter user experience" class="field" id="pilotExperience" required></br></br>
+            </div>     
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+

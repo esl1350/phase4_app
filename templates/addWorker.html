@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Add Worker</title>
+{%endblock%}
+
+{% block body%}
+<h1>Add Worker</h1>
+<div class="main">                 
+    <h2>Fill in user details here!</h2>
+    <form action="{{ url_for('addWorker')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Username:</p>
+                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
+            </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+
