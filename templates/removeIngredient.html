@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Remove Ingredient</title>
+{%endblock%}
+
+{% block body%}
+<h1>Remove Ingredient</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in ingredient details here!</h2>
+    <form action="{{ url_for('removeIngredient')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Barcode:</p>
+                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" required>
+            </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+

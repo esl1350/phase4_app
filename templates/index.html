@@ -7,21 +7,68 @@
 {% block body%}
 <div class="main">                 
     <h1>Restaurant Supply Express!</h1>
-    <a href="{{ url_for('addUser') }}"><button class="btn">Add User</button></a>
-    </br>
-    <a href="{{ url_for('addPilot') }}"><button class="btn">Add Pilot</button></a>
-    </br>
-    <a href="{{ url_for('addWorker') }}"><button class="btn">Add Worker</button></a>
-    </br>
-    <a href="{{ url_for('removePilot') }}"><button class="btn">Remove Pilot</button></a>
-    </br>
-    <a href="{{ url_for('purchaseIng') }}"><button class="btn">Purchase Ingredient</button></a>
-    </br>
-    <a href="{{ url_for('displayOwner') }}"><button class="btn">Display Owner</button></a>
-    </br>
-    <a href="{{ url_for('displayIng') }}"><button class="btn">Display Ingredients</button></a>
-    </br>
-    <a href="{{ url_for('displayService') }}"><button class="btn">Display Service</button></a>
+    <hr width = "80%" class="line">
+    <div class="container">
+        <div class="block">
+            <h2>Add:</h2>
+            <a href="{{ url_for('addOwner') }}"><button class="btn">Add Owner</button></a>
+            </br>
+            <a href="{{ url_for('addDrone') }}"><button class="btn">Add Drone</button></a>
+            </br>
+            <a href="{{ url_for('addIngredient') }}"><button class="btn">Add Ingredient</button></a>
+            </br>
+            <a href="{{ url_for('addRestaurant') }}"><button class="btn">Add Restaurant</button></a>
+            </br>
+            <a href="{{ url_for('addPilot') }}"><button class="btn">Add Pilot</button></a>
+            </br>
+            <a href="{{ url_for('addWorker') }}"><button class="btn">Add Worker</button></a>
+            </br>
+        </div>
+        <div class="block">
+            <h2>Remove:</h2>
+            <a href="{{ url_for('removeDrone') }}"><button class="btn">Remove Drone</button></a>
+            </br>
+            <a href="{{ url_for('removeIngredient') }}"><button class="btn">Remove Ingredient</button></a>
+            </br>
+            <a href="{{ url_for('removePilot') }}"><button class="btn">Remove Pilot</button></a>
+            </br>
+        </div>
+        <div class = "block">
+            <h2>Drone:</h2>
+            <a href="{{ url_for('flyDrone') }}"><button class="btn">Fly Drone</button></a>
+            </br>
+            <a href="{{ url_for('loadDrone') }}"><button class="btn">Load Drone</button></a>
+            </br>
+            <a href="{{ url_for('refuelDrone') }}"><button class="btn">Refuel Drone</button></a>
+            </br>
+            <a href="{{ url_for('takeoverDrone') }}"><button class="btn">Takeover Drone</button></a>
+            </br>
+            <a href="{{ url_for('joinSwarm') }}"><button class="btn">Join Swarm</button></a>
+            </br>
+            <a href="{{ url_for('leaveSwarm') }}"><button class="btn">Leave Swarm</button></a>
+            </br>
+            <a href="{{ url_for('purchaseIng') }}"><button class="btn">Purchase Ingredient</button></a>
+            </br>
+        </div>
+        <div class="block">
+            <h2>User:</h2>
+            <a href="{{ url_for('startFunding') }}"><button class="btn">Start Funding</button></a>
+            </br>
+        </div>
+        <div class="block">
+            <h2>Views:</h2>
+            <a href="{{ url_for('display') }}"><button class="btn">Display Views</button></a>
+            </br>
+            <a href="{{ url_for('displayIng') }}"><button class="btn">Display Ingredients</button></a>
+            </br>
+            <a href="{{ url_for('displayService') }}"><button class="btn">Display Service</button></a>
+            </br>
+        </div>
+    </div>
+
+
+    <hr width = "80%" class="line">
+
     </br>
 </div>
 {%endblock%}

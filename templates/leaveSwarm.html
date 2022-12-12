@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Leave Swarm</title>
+{%endblock%}
+
+{% block body%}
+<h1>Leave Swarm</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Have your drone leave a swarm!</h2>
+    <form action="{{ url_for('leaveSwarm')}}" method="post" autocomplete="off">
+      <div class="element">
+            <p>Drone ID:</p>
+            <input type="text" name="ip_id" placeholder="Enter drone ID" class="field" id="ip_id" required>
+            </div>
+            <div class="element">
+            <p>Drone Tag:</p>
+            <input type="number" name="ip_tag" placeholder="Enter drone tag" class="field" id="ip_tag" min = "0" required></br></br>
+            </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+

@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head%}
-<title>Add User</title>
+<title>Add Owner</title>
 {%endblock%}
 
 {% block body%}
 <h1>Add Owner</h1>
-<div class="main">                 
-    <h2>Fill in user details here!</h2>
-    <form action="{{ url_for('addUser')}}" method="post" autocomplete="off">
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in owner details here!</h2>
+    <form action="{{ url_for('addOwner')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Username:</p>
                   <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>

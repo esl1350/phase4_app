@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Start Funding</title>
+{%endblock%}
+
+{% block body%}
+<h1>Start Funding</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in owner and restaurant details!</h2>
+    <form action="{{ url_for('startFunding')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Owner username:</p>
+                  <input type="text" name="ip_owner" placeholder="Enter owner username" class="field" id="ip_owner" required>
+            </div>
+            <div class="element">
+                  <p>Restaurant long name</p>
+                  <input type="text" name="ip_long_name" placeholder="Enter restaurant long name" class="field" id="ip_long_name" required></br></br>
+            </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}
+
