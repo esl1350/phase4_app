@@ -8,7 +8,7 @@ mysql = MySQL(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '11212020'
+app.config['MYSQL_PASSWORD'] = 'Aa1234567890'
 app.config['MYSQL_DB'] = 'restaurant_supply_express'
 
 @app.route('/')
@@ -319,6 +319,28 @@ def takeoverDrone():
         else:
             alert = 'field lengths incorrect'
     return render_template('takeoverDrone.html', alert = alert)
+
+@app.route('/addEmployee', methods = ['GET', 'POST'])
+def addEmployee():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        username = request.form['username']
+        fname = request.form['fname']
+        lname = request.form['lname']
+        address = request.form['address']
+        birthdate = request.form['birthdate']
+        tax_id = request.form['tax_id']
+        hired = request.form['hired']
+        employee_experience = request.form['employee_experience']
+        salary = request.form['salary']
+        if len(username) <= 40 and len(fname) <= 100 and len(lname) <= 100 and len(address) <= 500 and len(birthdate) == 10 and len(tax_id) <= 40:
+            cursor.execute('call add_owner(% s, % s, % s, % s, % s, % s, % s, % s, % s)', (username, fname, lname, address, birthdate, tax_id, hired, employee_experience, salary))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addEmployee.html', alert = alert)
 
 
 

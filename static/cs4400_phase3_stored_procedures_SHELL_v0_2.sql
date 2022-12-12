@@ -64,6 +64,7 @@ sp_main: begin
     -- ensure new employee has a unique tax identifier
     if (select count(*) from employees where taxID = ip_taxID) > 0
 		then leave sp_main; end if;
+	if ip_birthdate >= ip_hired then leave sp_main; end if;
 	insert into users values(ip_username, ip_first_name, ip_last_name, ip_address, ip_birthdate);
     insert into employees values(ip_username, ip_taxID, ip_hired, ip_employee_experience, ip_salary);
 end //
