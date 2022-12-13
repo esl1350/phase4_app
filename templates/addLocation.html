@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Add Location</title>
+{%endblock%}
+
+{% block body%}
+<h1>Add Location</h1>
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                 
+    <h2>Fill in new location details</h2>
+    <form action="{{ url_for('addLocation')}}" method="post" autocomplete="off">
+      <div class="element">
+                  <p>Location:</p>
+                  <input type="text" name="label" placeholder="Enter location name" class="field" id="label" maxlength="40" required>
+            </div>
+            <div class="element">
+                  <p>X Coordinates:</p>
+                  <input type="number" name="x_coord" placeholder="Enter x coordinates" class="field" id="x_coord" min="-2147483647" max="2147483647" required></br></br>
+            </div>
+            <div class="element">
+                  <p>Y Coordinates:</p>
+                  <input type="number" name="y_coord" placeholder="Enter y coordinates" class="field" id="y_coord" min="-2147483647" max="2147483647" required></br></br>
+            </div>
+            <div class="element">
+                  <p>Space:</p>
+                  <input type="number" name="space" placeholder="Enter space" class="field" id="space" min="0" max="2147483647" required></br></br>
+            </div>
+            <input type="submit" class="btn" value="Update">
+            <div><p class="alert">{{alert}}</p></div>
+
+      </form>                    
+</div>
+{%endblock%}

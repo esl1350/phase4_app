@@ -9,28 +9,24 @@
 <div class="main">
       <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
     </br>                 
-    <h2>Fill in new service details here!</h2>
+    <h2>Fill in new service details</h2>
     <form action="{{ url_for('addService')}}" method="post" autocomplete="off">
       <div class="element">
-                  <p>Username:</p>
-                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
+                  <p>Service ID:</p>
+                  <input type="text" name="id" placeholder="Enter service ID" class="field" id="id" maxlength="40" required>
             </div>
             <div class="element">
-                  <p>First name:</p>
-                  <input type="text" name="fname" placeholder="Enter user first name" class="field" id="fname" required></br></br>
+                  <p>Service name:</p>
+                  <input type="text" name="long_name" placeholder="Enter service name" class="field" id="long_name" maxlength="100" required></br></br>
             </div>
             <div class="element">
-                  <p>Last name:</p>
-                  <input type="text" name="lname" placeholder="Enter user last name" class="field" id="lname" required></br></br>
+                  <p>Base location:</p>
+                  <input type="text" name="home_base" placeholder="Enter base location" class="field" id="home_base" maxlength="40" required></br></br>
             </div>
             <div class="element">
-                  <p>Address:</p>
-                  <input type="text" name="address" placeholder="Enter user address" class="field" id="address" required></br></br>
+                  <p>Manager name:</p>
+                  <input type="text" name="manager" placeholder="Enter manager name" class="field" id="manager" maxlength="40" required></br></br>
             </div>
-            <div class="element">
-                  <p>Birthdate (YYYY-MM-DD):</p>
-                  <input type="date" id="birthdate" name="birthdate"></br></br>
-            </div>        
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>
 
