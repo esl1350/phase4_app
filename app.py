@@ -239,7 +239,7 @@ def flyDrone():
         ip_id = request.form['ip_id']
         ip_tag = request.form['ip_tag']
         ip_destination = request.form['ip_destination']
-        if len(ip_id) <= 40 and len(ip_destination) <= 10:
+        if len(ip_id) <= 40 and len(ip_destination) <= 40:
             cursor.execute('call fly_drone(% s, % s, % s)', (ip_id, ip_tag, ip_destination))
             mysql.connection.commit()
             alert = 'query executed!'

@@ -219,7 +219,10 @@ sp_main: begin
         then leave sp_main; end if;
 	if (ip_manager in (select manager from delivery_services))
 		then leave sp_main; end if;
+	if (ip_manager in (select username from work_for))
+		then leave sp_main; end if;
     insert into delivery_services values (ip_id, ip_long_name, ip_home_base, ip_manager);
+    insert into work_for values (ip_manager, ip_id);
     
 end //
 delimiter ;

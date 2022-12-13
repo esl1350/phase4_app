@@ -6,7 +6,9 @@
 
 {% block body%}
 <h1>Remove Pilot</h1>
-<div class="main">                 
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                   
     <h2>Remove pilot here!</h2>
     <form action="{{ url_for('removePilot')}}" method="post" autocomplete="off">
       <div class="element">

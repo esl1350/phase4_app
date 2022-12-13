@@ -6,7 +6,9 @@
 
 {% block body%}
 <h1>Purchase Ingredient</h1>
-<div class="main">                 
+<div class="main">
+      <a href="{{ url_for('index') }}"><button class="btn">Home Page</button></a>
+    </br>                    
     <h2>Make a purchase for your restaurant</h2>
     <form action="{{ url_for('purchaseIng')}}" method="post" autocomplete="off">
       <div class="element">
