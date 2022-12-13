@@ -4,6 +4,9 @@ CS 4400 Phase 4 Project: Restaurant Supply Express
 by: Reuben An, Kenny Hoang, Jeffrey Lei, Elizabeth Liu 
  
 ## Setup:
+
+This setup is for the Windows operating system. Mac/Linux may differ.
+
 Clone the repo, and run the sql files located in the static folder in your own mySQL workbench (cs4400_phase3_stored_procedures_SHELL_v0_2.sql and restaurant_delivery_schema.sql).
 
 Go into app.py and update the following lines of code with your own mySQL username and password (should be near the top of the file).
@@ -11,9 +14,11 @@ Go into app.py and update the following lines of code with your own mySQL userna
  app.config['MYSQL_USER'] = 'your username here'
  app.config['MYSQL_PASSWORD'] = 'your password here'
 ```
-Use pip to install the following package and then create a virtual environment by running the activate.bat script in the venv folder.
+Use pip to install the following package and then create and activate a virtual environment by running the activate script in the venv folder.
 ```
  pip install virtualenv
+ python -m venv venv
+ venv\Scripts\activate
 ```
 Once inside the virtual environment, your command line should look like this:
 ```
