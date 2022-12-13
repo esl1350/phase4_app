@@ -32,6 +32,7 @@ def addOwner():
         else:
             alert = 'field lengths incorrect'
     return render_template('addOwner.html', alert = alert)
+
 @app.route('/addDrone', methods = ['GET' , 'POST'])
 def addDrone():
     alert = ''
@@ -50,6 +51,7 @@ def addDrone():
         else:
             alert = 'field lengths incorrect'
     return render_template('addDrone.html', alert = alert)
+
 @app.route('/addIngredient', methods = ['GET', 'POST'])
 def addIngredient():
     alert = ''
@@ -65,6 +67,7 @@ def addIngredient():
         else:
             alert = 'field lengths incorrect'
     return render_template('addIngredient.html', alert = alert)
+
 @app.route('/addRestaurant', methods = ['GET', 'POST'])
 def addRestaurant():
     alert = ''
@@ -227,19 +230,6 @@ def displayService():
     rows = cursor.fetchall()
     print(rows)
     return render_template('displayService.html', rows = rows)
-
-@app.route('/display')
-def display():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM display_owner_view;')
-    ownerRows = cursor.fetchall()
-    cursor.execute('SELECT * FROM display_employee_view;')
-    employeeRows = cursor.fetchall()
-    cursor.execute('SELECT * FROM display_ingredient_view;')
-    ingredientRows = cursor.fetchall()
-    cursor.execute('SELECT * FROM display_service_view;')
-    serviceRows = cursor.fetchall()
-    return render_template('display.html', ownerRows = ownerRows, employeeRows = employeeRows, ingredientRows = ingredientRows, serviceRows = serviceRows)
     
 @app.route('/flyDrone', methods = ['GET', 'POST'])
 def flyDrone():
@@ -330,19 +320,114 @@ def addEmployee():
         lname = request.form['lname']
         address = request.form['address']
         birthdate = request.form['birthdate']
-        tax_id = request.form['tax_id']
+        taxID = request.form['taxID']
         hired = request.form['hired']
         employee_experience = request.form['employee_experience']
         salary = request.form['salary']
-        if len(username) <= 40 and len(fname) <= 100 and len(lname) <= 100 and len(address) <= 500 and len(birthdate) == 10 and len(tax_id) <= 40:
-            cursor.execute('call add_owner(% s, % s, % s, % s, % s, % s, % s, % s, % s)', (username, fname, lname, address, birthdate, tax_id, hired, employee_experience, salary))
+        if len(username) <= 40 and len(fname) <= 100 and len(lname) <= 100 and len(address) <= 500 and len(birthdate) == 10 and len(taxID) <= 40 and len(hired) == 10:
+            cursor.execute('call add_employee(% s, % s, % s, % s, % s, % s, % s, % s, % s)', (username, fname, lname, address, birthdate, taxID, hired, employee_experience, salary))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
             alert = 'field lengths incorrect'
     return render_template('addEmployee.html', alert = alert)
 
+@app.route('/addService', methods = ['GET', 'POST'])
+def addService():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        id = request.form['id']
+        long_name = request.form['long_name']
+        home_base = request.form['home_base']
+        manager = request.form['manager']
+        if len(id) <= 40 and len(long_name) <= 100 and len(home_base) <= 40 and len(manager) <= 40:
+            cursor.execute('call add_service(% s, % s, % s, % s)', (id, long_name, home_base, manager))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addService.html', alert = alert)
 
+@app.route('/addLocation', methods = ['GET', 'POST'])
+def addLocation():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        label = request.form['label']
+        x_coord = request.form['x_coord']
+        y_coord = request.form['y_coord']
+        space = request.form['space']
+        if len(label) <= 40:
+            cursor.execute('call add_location(% s, % s, % s, % s)', (label, x_coord, y_coord, space))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('addLocation.html', alert = alert)
+
+@app.route('/hireEmployee', methods = ['GET', 'POST'])
+def hireEmployee():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        username = request.form['username']
+        id = request.form['id']
+        if len(username) <= 40 and len(id) <= 40:
+            cursor.execute('call hire_employee(% s, % s)', (username, id))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('hireEmployee.html', alert = alert)
+
+@app.route('/fireEmployee', methods = ['GET', 'POST'])
+def fireEmployee():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        username = request.form['username']
+        id = request.form['id']
+        if len(username) <= 40 and len(id) <= 40:
+            cursor.execute('call fire_employee(% s, % s)', (username, id))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('fireEmployee.html', alert = alert)
+
+@app.route('/manageService', methods = ['GET', 'POST'])
+def manageService():
+    alert = ''
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        username = request.form['username']
+        id = request.form['id']
+        if len(username) <= 40 and len(id) <= 40:
+            cursor.execute('call manage_service(% s, % s)', (username, id))
+            mysql.connection.commit()
+            alert = 'query executed!'
+        else:
+            alert = 'field lengths incorrect'
+    return render_template('manageService.html', alert = alert)
+
+@app.route('/display')
+def display():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM display_owner_view;')
+    ownerRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_employee_view;')
+    employeeRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_ingredient_view;')
+    ingredientRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_service_view;')
+    serviceRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_pilot_view;')
+    pilotRows = cursor.fetchall()
+    cursor.execute('SELECT * FROM display_location_view;')
+    locationRows = cursor.fetchall()
+    return render_template('display.html', ownerRows = ownerRows, employeeRows = employeeRows, ingredientRows = ingredientRows, 
+        serviceRows = serviceRows, pilotRows = pilotRows, locationRows = locationRows)
 
 if __name__ == "__main__":
     app.run(debug=True)

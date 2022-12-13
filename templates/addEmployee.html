@@ -13,24 +13,40 @@
     <form action="{{ url_for('addEmployee')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Username:</p>
-                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" required>
+                  <input type="text" name="username" placeholder="Enter user username" class="field" id="username" maxlength="40" required>
             </div>
             <div class="element">
                   <p>First name:</p>
-                  <input type="text" name="fname" placeholder="Enter user first name" class="field" id="fname" required></br></br>
+                  <input type="text" name="fname" placeholder="Enter user first name" class="field" id="fname" maxlength="100" required></br></br>
             </div>
             <div class="element">
                   <p>Last name:</p>
-                  <input type="text" name="lname" placeholder="Enter user last name" class="field" id="lname" required></br></br>
+                  <input type="text" name="lname" placeholder="Enter user last name" class="field" id="lname" maxlength="100" required></br></br>
             </div>
             <div class="element">
                   <p>Address:</p>
-                  <input type="text" name="address" placeholder="Enter user address" class="field" id="address" required></br></br>
+                  <input type="text" name="address" placeholder="Enter user address" class="field" id="address" maxlength="500" required></br></br>
             </div>
             <div class="element">
-                  <p>Birthdate (YYYY-MM-DD):</p>
-                  <input type="date" id="birthdate" name="birthdate"></br></br>
-            </div>        
+                  <p>Tax ID:</p>
+                  <input type="text" name="taxID" placeholder="Enter user tax id" class="field" id="taxID" pattern="^\d{3}-?\d{2}-?\d{4}$" title="Tax ID should only contain integers in the format: XXX-XX-XXXX" required></br></br>
+            </div>
+            <div class="element">
+                  <p>Experience:</p>
+                  <input type="number" name="employee_experience" placeholder="Enter user experience" class="field" id="employee_experience" min="0" max="2147483647" required></br></br>
+            </div>
+            <div class="element">
+                  <p>Salary:</p>
+                  <input type="number" name="salary" placeholder="Enter user salary" class="field" id="salary" min="0" max="2147483647"  required></br></br>
+            </div>
+            <div class="element">
+                  <p>Date Hired: </p>
+                  <input type="date" id="hired" name="hired" maxlength="10" required ></br></br>
+            </div>
+            <div class="element">
+                  <p>Birthdate: </p>
+                  <input type="date" id="birthdate" name="birthdate" maxlength="10" required ></br></br>
+            </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>
 

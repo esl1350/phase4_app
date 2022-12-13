@@ -159,7 +159,7 @@ sp_main: begin
 	if (ip_id not in (select id from delivery_services)) then leave sp_main; end if;
     -- ensure that a valid pilot will control the drone
     if (ip_flown_by not in (select username from pilots)) then leave sp_main; end if;
-    
+    if ((select id from work_for where username = ip_flown_by) != ip_id or (select count(*) from pilots where username = ip_flown_by) <= 0) then leave sp_main; end if;
     if ip_fuel <= 0 or ip_capacity < 0 or ip_sales < 0 then leave sp_main; end if;
 
     set @home = (select home_base from delivery_services where ip_id = id);
@@ -217,6 +217,8 @@ sp_main: begin
     -- ensure that the manager is valid
     if (ip_manager not in (select username from workers))
         then leave sp_main; end if;
+	if (ip_manager in (select manager from delivery_services))
+		then leave sp_main; end if;
     insert into delivery_services values (ip_id, ip_long_name, ip_home_base, ip_manager);
     
 end //
@@ -314,10 +316,10 @@ sp_main: begin
 	if isnull(ip_username) then leave sp_main; end if;
     if isnull(ip_id) then leave sp_main; end if;
 	-- ensure that the employee is currently working for the service
-    if not exists(select 1 from work_for where username = ip_username and id = ip_id group by username, id)
+    if (select count(*) from work_for where username = ip_username and id = ip_id) = 0
 		then leave sp_main; end if;
     -- ensure that the employee isn't an active manager
-    if exists (select 1 from delivery_services where manager = ip_username)
+    if (select count(*) from delivery_services where manager = ip_username) > 0
 		then leave sp_main; end if;
 	-- ensure that the employee isn't controlling any drones
     if (select count(*) from drones where flown_by = ip_username) > 0
