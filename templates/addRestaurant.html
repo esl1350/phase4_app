@@ -13,7 +13,7 @@
     <form action="{{ url_for('addRestaurant')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Name:</p>
-                  <input type="text" name="name" placeholder="Enter restaurant name" class="field" id="name" required>
+                  <input type="text" name="name" placeholder="Enter restaurant name" class="field" id="name" pattern="\S(.*\S)?" title="No whitespace in front or back allowed" required>
             </div>
             <div class="element">
                   <p>Rating:</p>
@@ -25,7 +25,7 @@
             </div> 
             <div class="element">
                 <p>Location:</p>
-                <input type="text" name="location" placeholder="Enter restaurant location" class="field" id="location" required>
+                <input type="text" name="location" placeholder="Enter restaurant location" class="field" id="location" pattern="\S(.*\S)?" title="No whitespace in front or back allowed" required>
           </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>

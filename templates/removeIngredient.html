@@ -13,7 +13,7 @@
     <form action="{{ url_for('removeIngredient')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Barcode:</p>
-                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" required>
+                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" pattern="^\S*$" title = "No whitespace allowed" required>
             </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>

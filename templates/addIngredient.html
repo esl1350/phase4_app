@@ -13,11 +13,12 @@
     <form action="{{ url_for('addIngredient')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Barcode:</p>
-                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" required>
+                  <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" pattern="^\S*$" title = "No whitespace allowed" required>
             </div>
             <div class="element">
                   <p>Name:</p>
-                  <input type="text" name="name" placeholder="Enter ingredient name" class="field" id="name" required></br></br>  </div>
+                  <input type="text" name="name" placeholder="Enter ingredient name" class="field" id="name" pattern="\S(.*\S)?" title="No whitespace in front or back allowed" required></br></br>  
+            </div>
             <div class="element">
                     <p>Weight:</p>
                     <input type="number" name="weight" placeholder="Enter ingredient weight" class="field" id="weight" min="0" max="2147483647" required></br></br>

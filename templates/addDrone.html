@@ -13,7 +13,7 @@
     <form action="{{ url_for('addDrone')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>ID:</p>
-                  <input type="text" name="id" placeholder="Enter drone ID" class="field" id="id" required>
+                  <input type="text" name="id" placeholder="Enter drone ID" class="field" id="id" pattern="/^\S*$/" title = "No whitespace allowed"  required>
             </div>
             <div class="element">
                   <p>Tag:</p>
@@ -33,7 +33,7 @@
           </div> 
           <div class="element">
             <p>Flown by:</p>
-            <input type="text" name="pilot" placeholder="Enter drone pilot" class="field" id="pilot" required>
+            <input type="text" name="pilot" placeholder="Enter drone pilot" class="field" id="pilot" pattern="/^\S*$/" title = "No whitespace allowed"  required>
       </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>

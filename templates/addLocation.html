@@ -13,7 +13,7 @@
     <form action="{{ url_for('addLocation')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>Location:</p>
-                  <input type="text" name="label" placeholder="Enter location name" class="field" id="label" maxlength="40" required>
+                  <input type="text" name="label" placeholder="Enter location name" class="field" id="label" maxlength="40" pattern="\S(.*\S)?" title="No whitespace in front or back allowed" required>
             </div>
             <div class="element">
                   <p>X Coordinates:</p>

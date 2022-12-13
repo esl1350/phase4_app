@@ -12,12 +12,12 @@
     <h2>Fill in owner and restaurant details!</h2>
     <form action="{{ url_for('startFunding')}}" method="post" autocomplete="off">
       <div class="element">
-                  <p>Owner username:</p>
-                  <input type="text" name="ip_owner" placeholder="Enter owner username" class="field" id="ip_owner" required>
+                  <p>Owner Username:</p>
+                  <input type="text" name="ip_owner" placeholder="Enter owner username" class="field" id="ip_owner" pattern="^\S*$" title = "No whitespace allowed" required>
             </div>
             <div class="element">
-                  <p>Restaurant long name</p>
-                  <input type="text" name="ip_long_name" placeholder="Enter restaurant long name" class="field" id="ip_long_name" required></br></br>
+                  <p>Restaurant Name</p>
+                  <input type="text" name="ip_long_name" placeholder="Enter restaurant long name" class="field" id="ip_long_name" pattern="\S(.*\S)?" title="No whitespace in front or back allowed" required></br></br>
             </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>

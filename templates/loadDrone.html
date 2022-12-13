@@ -13,7 +13,7 @@
     <form action="{{ url_for('loadDrone')}}" method="post" autocomplete="off">
       <div class="element">
                   <p>ID:</p>
-                  <input type="text" name="id" placeholder="Enter drone ID" class="field" id="id" required>
+                  <input type="text" name="id" placeholder="Enter drone ID" class="field" id="id" pattern="^\S*$" title = "No whitespace allowed" required>
             </div>
             <div class="element">
                   <p>Tag:</p>
@@ -21,7 +21,7 @@
             </div>
             <div class="element">
                 <p>Barcode:</p>
-                <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" required></br></br>
+                <input type="text" name="barcode" placeholder="Enter ingredient barcode" class="field" id="barcode" pattern="^\S*$" title = "No whitespace allowed" required></br></br>
           </div>
             <div class="element">
                   <p>Quantity:</p>
