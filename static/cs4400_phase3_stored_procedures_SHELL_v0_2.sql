@@ -87,6 +87,7 @@ sp_main: begin
     if not exists (select 1 from employees where username = ip_username)
     then leave sp_main;
     end if;
+    if (select count(*) from delivery_services where manager = ip_username) > 0 then leave sp_main; end if;
     -- ensure new pilot has a unique license identifier
     if exists (select 1 from pilots where licenseID = ip_licenseID)
     then leave sp_main;
@@ -161,9 +162,10 @@ sp_main: begin
     if (ip_flown_by not in (select username from pilots)) then leave sp_main; end if;
     if ((select id from work_for where username = ip_flown_by) != ip_id or (select count(*) from pilots where username = ip_flown_by) <= 0) then leave sp_main; end if;
     if ip_fuel <= 0 or ip_capacity < 0 or ip_sales < 0 then leave sp_main; end if;
-
+    if (select space from locations where label = (select home_base from delivery_services where ip_id = id)) <= 0 then leave sp_main; end if;
     set @home = (select home_base from delivery_services where ip_id = id);
     insert into drones values (ip_id, ip_tag, ip_fuel, ip_capacity, ip_sales, ip_flown_by, null, null, @home);
+    update locations set space = space - 1 where label = (select home_base from delivery_services where ip_id = id);
 end //
 delimiter ;
 
@@ -492,10 +494,10 @@ sp_main: begin
 	-- ensure that the quantity of new packages is greater than zero
     if (ip_more_packages <= 0) then leave sp_main; end if;
 	-- ensure that the drone has sufficient capacity to carry the new packages
-    set @addedcapacity = (ip_more_packages);
-    set @currentcapacity = if(exists(select sum(quantity) from payload where ip_tag = payload.tag and ip_id = payload.id), (select sum(quantity) from payload where ip_tag = payload.tag and ip_id = payload.id), 0);
-    if @addedcapacity + @currentcapacity > (select capacity from drones where (drones.id = ip_id) and (drones.tag = ip_tag)) then leave sp_main; end if;
+    set @addedcapacity = (ip_more_packages)	;
+    if ((select capacity from drones where (drones.id = ip_id) and (drones.tag = ip_tag)) - @addedcapacity) < 0 then leave sp_main; end if;
     -- add more of the ingredient to the drone
+    update drones set capacity = capacity - @addedcapacity where drones.tag = ip_tag and drones.id = ip_id;
     if ((select count(*) from payload where ip_id = id and ip_tag = tag and ip_barcode = barcode) > 0) then
 	update payload set quantity = quantity + ip_more_packages where id = ip_id and tag = ip_tag and barcode = ip_barcode; leave sp_main; end if;
     insert into payload values(ip_id, ip_tag, ip_barcode, ip_more_packages, ip_price);
@@ -557,26 +559,27 @@ drop procedure if exists fly_drone;
 delimiter //
 create procedure fly_drone (in ip_id varchar(40), in ip_tag integer, in ip_destination varchar(40))
 sp_main: begin
-	if isnull(ip_id) then leave sp_main; end if;
+    if isnull(ip_id) then leave sp_main; end if;
     if isnull(ip_tag) then leave sp_main; end if;
     if isnull(ip_destination) then leave sp_main; end if;
-    
-	-- ensure that the lead drone being flown is directly controlled and owned by the service
+    -- ensure that the lead drone being flown is directly controlled and owned by the service
     if (select count(*) from drones where (ip_id = id and ip_tag = tag) and isnull(flown_by)) > 0
-		then leave sp_main; end if;
+        then leave sp_main; end if;
     -- ensure that the destination is a valid location
     if (select count(*) from locations where label = ip_destination) = 0
-		then leave sp_main; end if;
+        then leave sp_main; end if;
     -- ensure that the drone isn't already at the location
     if (fuel_required((select hover from drones where (ip_id = id and ip_tag = tag)), ip_destination)) = 0
-		then leave sp_main; end if;
+        then leave sp_main; end if;
     -- ensure that the drone/swarm has enough fuel to reach the destination and (then) home base
-    if ((select count(fuel) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag) and 
-	fuel > ((fuel_required((select hover from drones where (ip_id = id and ip_tag = tag)), ip_destination)) + 
-	(fuel_required(ip_destination, (select home_base from delivery_services where (ip_id = id)))))) 
-	<
-	(select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag)))
-		then leave sp_main; end if;
+    select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag) into @numberDrones;
+    select hover from drones where (ip_id = id and ip_tag = tag) into @currLocation;
+    select home_base from delivery_services where ip_id = id into @homeBase;
+    if ((select count(fuel) from drones where ((ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag)) and 
+    fuel > ((fuel_required(@currLocation, ip_destination)) + (fuel_required(ip_destination, @homeBase))))
+    <
+    (@numberDrones))
+        then leave sp_main; end if;
     -- ensure that the drone/swarm has enough space at the destination for the flight
     if ((select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag)) 
     >
@@ -585,10 +588,10 @@ sp_main: begin
 	select fuel_required((select hover from drones where (ip_id = id and ip_tag = tag)), ip_destination) into @required;
     update drones set fuel = fuel - @required
 		where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag);
-    update drones set hover = ip_destination
-		where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag);
-	update locations set space = space + (select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag))
+    update locations set space = space + (select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag))
 		where (label = (select hover from drones where (ip_id = id and ip_tag = tag)));
+	update drones set hover = ip_destination
+		where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag);
 	update locations set space = space - (select count(*) from drones where (ip_id = id and ip_tag = tag) or (swarm_id = ip_id and swarm_tag = ip_tag))
 		where (label = ip_destination);
 end //
@@ -618,7 +621,7 @@ sp_main: begin
     then leave sp_main;
     end if;
     -- ensure that the drone is valid and exists at the resturant's location
-    if not (exists (select 1 from drones where tag = ip_tag and id = ip_id) and exists (select 1 from drones where hover = (select location from restaurants where long_name = ip_long_name)))
+    if not (exists (select 1 from drones where tag = ip_tag and id = ip_id) and exists (select 1 from drones where hover = (select location from restaurants where long_name = ip_long_name) and id = ip_id and tag = ip_tag))
     then leave sp_main;
     end if;
 	-- ensure that the drone has enough of the requested ingredient
@@ -637,11 +640,12 @@ sp_main: begin
     update drones
     set sales = sales + ip_quantity * (select price from payload where tag = ip_tag and id = ip_id and barcode = ip_barcode)
     where tag = ip_tag and id = ip_id;
+    update drones
+    set capacity = capacity + ip_quantity where tag = ip_tag and id = ip_id;
     -- ensure all quantities in the payload table are greater than zero
-	if exists (select 1 from payload where quantity - ip_quantity <= 0)
-    then leave sp_main;
+	if ((select quantity from payload where ip_id = id and ip_tag = tag and ip_barcode = barcode) <= 0) then delete from payload where ip_id = id and ip_tag = tag and ip_barcode = barcode;
+    leave sp_main;
     end if;
-    
 end //
 delimiter ;
 
@@ -767,7 +771,7 @@ For each location, it includes the label, x- and y- coordinates, along with the
 number of restaurants, delivery services and drones at that location. */
 -- -----------------------------------------------------------------------------
 create or replace view display_location_view as
-select label, x_coord, y_coord, count(distinct restaurants.long_name)as num_restaurants, count(distinct delivery_services.id) as num_delivery_services, count(distinct tag) as num_drones
+select label, x_coord, y_coord, count(distinct restaurants.long_name)as num_restaurants, count(distinct delivery_services.id) as num_delivery_services, (count(DISTINCT CONCAT(drones.id, '_', drones.tag))) as num_drones
 from locations
 left outer join restaurants
 on label = location
@@ -786,7 +790,7 @@ that can be purchased and the lowest and highest prices at which the ingredient 
 sold at that location. */
 -- -----------------------------------------------------------------------------
 create or replace view display_ingredient_view as
-select ingredient as ingredient_name, location, quantity as amount_available, min(price) as low_price, max(price) as high_price
+select ingredient as ingredient_name, location, sum(quantity) as amount_available, min(price) as low_price, max(price) as high_price
 from
 (select ingredient, location, quantity, price
 from
@@ -800,7 +804,7 @@ from
 from ingredients
 cross join drones) as x
 where quantity is not null) as y
-group by ingredient, location, quantity
+group by ingredient, location
 order by ingredient;
 
 
@@ -817,10 +821,10 @@ select id, long_name, home_base, manager, revenue, count(distinct ingredient) as
 from 
 (select delivery_services.id as id, long_name, home_base, manager, sum(sales) as revenue
 from delivery_services
-cross join drones
+left join drones
 on delivery_services.id = drones.id
 group by id) as f
-cross join
+left join
 (select tag, serviceID, ingredient, quantity, quantity * price as total_price, quantity * weight as total_weight
 from
 (select drones.tag as tag, drones.id as serviceID, ingredients.iname as ingredient,

@@ -303,7 +303,7 @@ def takeoverDrone():
         id = request.form['ip_id']
         tag = request.form['ip_tag']
         if len(username) <= 40 and len(id) <= 40 :
-            cursor.execute('call add_owner(% s, % s, % s)', (username, id, tag))
+            cursor.execute('call takeover_drone(% s, % s, % s)', (username, id, tag))
             mysql.connection.commit()
             alert = 'query executed!'
         else:
