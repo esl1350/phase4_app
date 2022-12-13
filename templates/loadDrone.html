@@ -17,7 +17,7 @@
             </div>
             <div class="element">
                   <p>Tag:</p>
-                  <input type="number" name="tag" placeholder="Enter drone tag" class="field" id="tag" min = "0" required></br></br>
+                  <input type="number" name="tag" placeholder="Enter drone tag" class="field" id="tag" min = "0" max="2147483647"  required></br></br>
             </div>
             <div class="element">
                 <p>Barcode:</p>
@@ -25,11 +25,11 @@
           </div>
             <div class="element">
                   <p>Quantity:</p>
-                  <input type="number" name="quantity" placeholder="Enter ingredient quantity" class="field" id="quantity" required min="0"></br></br>
+                  <input type="number" name="quantity" placeholder="Enter ingredient quantity" class="field" id="quantity" required min="0" max="2147483647" ></br></br>
             </div> 
             <div class="element">
                 <p>Price:</p>
-                <input type="number" name="price" placeholder="Enter ingredient price" class="field" id="price" required min="0"></br></br>
+                <input type="number" name="price" placeholder="Enter ingredient price" class="field" id="price" required min="0" max="2147483647" ></br></br>
           </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>

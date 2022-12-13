@@ -17,11 +17,11 @@
             </div>
             <div class="element">
                   <p>Tag:</p>
-                  <input type="number" name="tag" placeholder="Enter drone tag" class="field" id="tag" required min = "0"></br></br>
+                  <input type="number" name="tag" placeholder="Enter drone tag" class="field" id="tag" required min = "0" max="2147483647" ></br></br>
             </div>
             <div class="element">
                 <p>Fuel:</p>
-                <input type="number" name="fuel" placeholder="Enter drone fuel" class="field" id="fuel" required min="0"></br></br>
+                <input type="number" name="fuel" placeholder="Enter drone fuel" class="field" id="fuel" required min="0" max="2147483647" ></br></br>
           </div>
             <input type="submit" class="btn" value="Update">
             <div><p class="alert">{{alert}}</p></div>
