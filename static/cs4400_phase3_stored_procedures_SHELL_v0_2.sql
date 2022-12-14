@@ -683,7 +683,7 @@ sp_main: begin
 	-- ensure that the drone exists
 	if (select count(*) from drones where id = ip_id and tag = ip_tag) = 0 then leave sp_main; end if;
     -- ensure that the drone is not carrying any ingredients
-	if (ip_id in (select id from payload) and ip_tag in (select tag from payload)) then leave sp_main; end if;
+	if (select count(*) from payload where id = ip_id and tag = ip_tag) > 0 then leave sp_main; end if;
     delete from drones where id=ip_id and tag=ip_tag;
 	-- ensure that the drone is not leading a swarm
 end //
