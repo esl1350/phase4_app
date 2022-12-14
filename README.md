@@ -34,3 +34,38 @@ Still working inside your virtual environment, use python to run app.py.
  python app.py
 ```
 The terminal will run the application locally.
+
+## Technologies used:
+
+To create our application, we used Flask, Flaskmysql, and mysql. The flask framework connects to the mysql database through the flaskmysql package. GitHub was also used for version control so that our group could work on separate parts of the application at the same time. This let us split up the work and complete the application in a timely manner.
+
+## Work distribution:
+
+Our group seperated out the stored procedure sections from the main use case file and assigned them to the members. Bug testing and edge cases were checked as a group 
+
+### Kenny Hoang: 
+sections: 5 and 6
+
+view: 24
+
+
+
+### Elizabeth Liu : 
+sections: 3 and 4 
+
+view: 25
+
+Set up of flask and github
+
+### Jeffrey Lei: 
+sections: 1 and 7
+
+view: 26 and 27
+
+preliminary checks for invalid user input
+
+### Reuben Ahn: 
+sections: 2 and 8 
+
+view: 28 and 29 
+
